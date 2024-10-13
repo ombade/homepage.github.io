@@ -42,6 +42,7 @@
             align-items: center;
             justify-content: space-around;
             text-align: center;
+            min-height: 70vh; /* Set a minimum height */
         }
 
         /* GREETING MESSAGE */
@@ -140,6 +141,7 @@
 
             .glass {
                 width: 100%;
+                min-height: 85vh; /* Increased height for mobile devices */
             }
 
             .icons ul {
@@ -266,9 +268,10 @@
             document.getElementById('hour').innerHTML = convertHour(hour);
             document.getElementById('minute').innerHTML = ":" + minute + "&nbsp;";
             document.getElementById('timeSuffix').innerHTML = convertTimeOfDay(hour, timeOfDay);
-            document.getElementById('date').innerHTML = "Today is the " + day + daySuffix + " of " + monthNames[month] + " " + year;
+            document.getElementById('date').innerHTML = day + daySuffix + " " + monthNames[month] + " " + year;
+            setTimeout(updateClock, 1000);
 
-            setTimeout(loadGlassOverlayComponents, 500);
+            setBackgroundGradient();
         }
 
         function checkTime(i) {
