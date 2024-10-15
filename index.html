@@ -105,6 +105,27 @@
             transform: scale(1.2);
         }
 
+        /* FAVOURITE LINKS */
+        .favorites {
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .favorites ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .favorites a {
+            text-decoration: none;
+            color: #00b2d2;
+            font-size: 1.2rem;
+        }
+
+        .favorites a:hover {
+            text-decoration: underline;
+        }
+
         /* GOOGLE SEARCH BAR */
         .google-search {
             margin: 1.5rem 0;
@@ -194,6 +215,20 @@
                 <li><a href="https://chat.openai.com/"><i class="fa-brands fa-comment"></i></a></li>
             </ul>
         </div>
+
+        <!-- Favorite Links Section -->
+        <div class="favorites">
+            <h2>Favorite Resources</h2>
+            <ul>
+                <li><a href="https://www.interviewbit.com/oops-introduction/">OOPS - InterviewBit</a></li>
+                <li><a href="https://takeuforward.org/interviews/tcs-nqt-coding-questions/">TCS NQT Coding - TakeUForward</a></li>
+                <li><a href="https://takeuforward.org/interviews/blind-75-leetcode-questions/">Blind 75 Coding - TakeUForward</a></li>
+                <li><a href="https://www.geeksforgeeks.org/sql-query-questions-and-answers/">SQL Query - GeeksforGeeks</a></li>
+                <li><a href="https://www.interviewbit.com/dbms-interview-questions/">DBMS - InterviewBit</a></li>
+                <li><a href="https://drive.google.com/file/d/1Fg-XyW9Vg8/view">Behavioral Interview Questions - Google Drive</a></li>
+                <li><a href="https://www.indiabix.com/">Practice Questions - IndiaBix</a></li>
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -234,59 +269,40 @@
             } else if (hour < 22) {
                 document.querySelector('body').style.background="linear-gradient(-45deg, #fdec6e, #e0943d, #bc361a, #391106)";
             } else {
-                document.querySelector('body').style.background="linear-gradient(-45deg, #767d92, #2f4562, #152642, #081b33)";
+                document.querySelector('body').style.background="linear-gradient(-45deg, #27264e, #12122e, #03031e, #000000)";
             }
-
-            document.querySelector('body').style.backgroundSize="400% 400%";
-            document.querySelector('body').style.animation="gradient 8s ease infinite";
         }
 
         function loadGlassOverlayComponents() {
-            if (hour < 5) {
-                document.querySelector('#greeting').innerHTML = 'Late Night?';
-            } else if (hour < 12) {
-                document.querySelector('#greeting').innerHTML = 'Good Morning';
-            } else if (hour < 15) {
-                document.querySelector('#greeting').innerHTML = 'Good Afternoon';
-            } else if (hour < 22) {
-                document.querySelector('#greeting').innerHTML = 'Good Evening';
-            } else {
-                document.querySelector('#greeting').innerHTML = 'Late Night?';
-            }
-
-            // convert the time to a 12-hour clock
-            timeOfDay = convertTimeOfDay(hour, timeOfDay);
-            
-            let daySuffix;
-            if (day === 1 || day === 21 || day === 31) daySuffix = 'st';
-            else if (day === 2 || day === 22) daySuffix = 'nd';
-            else if (day === 3 || day === 23) daySuffix = 'rd';
-            else daySuffix = 'th';
-
-            let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-            document.getElementById('hour').innerHTML = convertHour(hour);
-            document.getElementById('minute').innerHTML = ":" + minute + "&nbsp;";
-            document.getElementById('timeSuffix').innerHTML = convertTimeOfDay(hour, timeOfDay);
-            document.getElementById('date').innerHTML = day + daySuffix + " " + monthNames[month] + " " + year;
-            setTimeout(updateClock, 1000);
+            // Update greeting based on time
+            const greetingText = document.querySelector("#greeting");
+            greetingText.innerText = getGreeting(hour);
+            document.querySelector("#clock #hour").innerText = hour > 12 ? (hour - 12) : hour;
+            document.querySelector("#clock #minute").innerText = ":" + minute;
+            document.querySelector("#clock #timeSuffix").innerText = hour >= 12 ? " PM" : " AM";
+            document.querySelector("#date").innerText = day + "/" + (month + 1) + "/" + year;
 
             setBackgroundGradient();
         }
 
+        function getGreeting(hour) {
+            if (hour < 12) {
+                return "Good Morning!";
+            } else if (hour < 17) {
+                return "Good Afternoon!";
+            } else {
+                return "Good Evening!";
+            }
+        }
+
         function checkTime(i) {
-            return (i < 10) ? "0" + i : i;
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
         }
 
-        function convertHour(hour) {
-            return (hour > 12) ? hour - 12 : hour;
-        }
-
-        function convertTimeOfDay(hour, timeOfDay) {
-            return (hour >= 12) ? "PM" : "AM";
-        }
-
-        updateClock();
+        window.setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
